@@ -12,16 +12,26 @@ const cities = [
     { name: 'Rabat', lat: 34.0209, lng: -6.8416 }
   ];
 
-async function fetchtemp (lat,lng){
-
-const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&key_weather=true`);
-const data = await response.json();
-console.log('Data:', data);}
-
-fetchtemp()
-
   function selectRandomCity(cities) {
     const randomIndex = Math.floor(Math.random() * cities.length);
     return cities[randomIndex];
   }
-  console.log(selectRandomCity(cities));
+  const RandCity = selectRandomCity(cities);
+
+console.log(RandCity)
+async function fetchtemp (lat,lng){
+try{
+const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true`);
+const data = await response.json();
+ return data;
+}
+catch(error){
+  console.log('Error:', error.message);
+
+}
+}
+async function logu() {
+const Dt = await fetchtemp(RandCity.lat,RandCity.lng);
+console.log(Dt);
+}
+logu();
